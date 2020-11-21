@@ -1,0 +1,53 @@
+footer{
+    background-color:#3F729B;
+    position: sticky;
+    bottom: 0px;
+    width:100%;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+h1{
+    color: #37474F;
+    border: 3px;
+    border-style: solid;
+    border-color: white;
+    text-shadow: 1px 1px 0px #3F729B;
+    padding: 1em;
+    
+}
+#titleimg{
+    margin-top:1em;
+
+}
+#imgudea{
+    padding-left:15em;
+}
+#reference{
+    color: #37474F;
+}
+.navigation{
+    background-color:#eceff1;
+
+}
+.form{
+    padding: 3em
+}
+body{
+    min-height: 400px;
+   clear: both;
+}
+
+input {
+    margin: 10px
+}
+.main-container {
+    min-height: 100vh; /* will cover the 100% of viewport */
+    overflow: hidden;
+    display: block;
+    position: relative;
+    padding-bottom: 100px; /* height of your footer */
+   }
+.referencia{
+    font-style: italic;
+    color: grey;
+}

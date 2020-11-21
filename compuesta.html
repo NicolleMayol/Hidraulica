@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <title>Composite Section</title>
+</head>
+
+<body>
+    <div class=navigation>
+        <ul class="nav justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="circular.html">Circular Culvert</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="compuesta.html">Composite Section</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"
+                    href="https://sites.google.com/site/jecanon/Home/academia/hidraulica-de-canales">Resources</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="muskingum.html" tabindex="-1" aria-disabled="true">Muskingum
+                    Cunge</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="onda.html" tabindex="-1" aria-disabled="true">Kinematic Wave</a>
+            </li>
+        </ul>
+    </div>
+    <!---Título-->
+    <div class=title>
+        <center>
+            <div class=container>
+                <div class=row>
+                    <div class=col>
+                        <h1 class=display-4>Composite Section</h1>
+                    </div>
+                    <div class=col><img id="titleimg" src="prismatic.png"></div>
+                </div>
+            </div>
+        </center>
+    </div>
+    <!--Formulario-->
+    <div class=form>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="normalDepth-tab" data-toggle="tab" href="#normalDepth" role="tab"
+                    aria-controls="normalDepth" aria-selected="true">Normal and Critical Depth</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="directStep-tab" data-toggle="tab" href="#directStep" role="tab"
+                    aria-controls="directStep" aria-selected="false">Direct Step</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                    aria-controls="contact" aria-selected="false">Paso estándar</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="normalDepth" role="tabpanel" aria-labelledby="normalDepth-tab">
+                <br>
+                <form>
+                    <div class=container>
+                        <div class=row>
+                            <div class="form-group">
+                                <div class="col">
+                                    <label for="formGroupParametros">
+                                        <h5>Section parameters (m)</h5>
+                                    </label>
+                                    <input type="text" class="form-control" id="b0" placeholder="Enter b0">
+                                    <input type="text" class="form-control" id="b1" placeholder="Enter b1">
+                                    <input type="text" class="form-control" id="b2" placeholder="Enter b2">
+                                    <input type="text" class="form-control" id="m1" placeholder="Enter m1">
+                                    <input type="text" class="form-control" id="m2" placeholder="Enter m2">
+                                    <input type="text" class="form-control" id="m3" placeholder="Enter m3">
+                                    <input type="text" class="form-control" id="m4" placeholder="Enter m4">
+                                    <input type="text" class="form-control" id="h1" placeholder="Enter h1">
+                                    <input type="text" class="form-control" id="h2" placeholder="Enter h2">
+                                    <input type="text" class="form-control" id="h3" placeholder="Enter h3">
+                                    <input type="text" class="form-control" id="h4" placeholder="Enter h4">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col">
+                                    <label for="formGroupManning">
+                                        <h5>Manning</h5>
+                                    </label>
+                                    <input type="text" class="form-control" id="n0" placeholder="Enter n0">
+                                    <input type="text" class="form-control" id="n01" placeholder="Enter n01">
+                                    <input type="text" class="form-control" id="n02" placeholder="Enter n02">
+                                    <input type="text" class="form-control" id="n1" placeholder="Enter n1">
+                                    <input type="text" class="form-control" id="n2" placeholder="Enter n2">
+                                    <input type="text" class="form-control" id="n3" placeholder="Enter n3">
+                                    <input type="text" class="form-control" id="n4" placeholder="Enter n4">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col">
+                                    <label for="formGroupFlujo">
+                                        <h5>Flow Variables</h5>
+                                    </label>
+                                    <input type="text" class="form-control" id="Q" placeholder="Enter Q (m3/s)">
+                                    <input type="text" class="form-control" id="So" placeholder="Enter So">
+                                    <input type="text" class="form-control" id="y0" placeholder="Enter y0">
+                                    <input type="text" class="form-control" id="x0" placeholder="Enter x0">
+                                    <input type="text" id="yc" class="form-control" placeholder="Enter assumed Yc">
+                                    <input type="text" id="yn" class="form-control" placeholder="Enter assumed Yn">
+                                    <input type="text" id="steps" class="form-control"
+                                        placeholder="Enter the number of steps">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h5>Fórmulas</h5>
+                                <p>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div>
+                    <center><button type="button" class="btn btn-primary" onclick="calculoDelYc()">Calcular Yc</button>
+                        <button type="button" class="btn btn-primary" onclick="calculoDeYn()">Calcular Yn</button>
+                        <button type="button" class="btn btn-primary" onclick="limpiarDatos()">Limpiar</button>
+                    </center>
+                </div>
+
+                <div>
+                    <h5>Intermediate Calculations</h5>
+                    <hr>
+                    <center>
+                        <h6>Critical Depth</h6>
+                    </center>
+                    <div class="table" id="criticalDepthTable">
+                        <table class="table table-hover">
+                            <thead class="thead-dark">
+                                <td>Critical Depth Yc (m)</td>
+                                <td>Flow Area A (m2)</td>
+                                <td>Wetted Perimeter P (m)</td>
+                                <td>Hydraulic Radius Rh (m)</td>
+                                <td>Top width T (m)</td>
+                                <td>Hydraulic Depth Dh (m)</td>
+                                <td>Froude Number (based on Y)</td>
+                                <td>Froude Number Interval ΔFr</td>
+                                <td>Energy Es</td>
+                            </thead>
+                            <tbody id="criticalDepthBody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr>
+                    <center>
+                        <h6>Normal Depth</h6>
+                    </center>
+                    <div class="table" id="normalDepthTable">
+                        <table class="table table-hover">
+                            <thead class="thead-dark">
+                                <td>Normal Depth Ym (m)</td>
+                                <td>Flow Area A (m2)</td>
+                                <td>Hydraulic Radius Rh (m)</td>
+                                <td>Wetted Perimeter P (m)</td>
+                                <td>Top width T (m)</td>
+                                <td>Hydraulic Depth Dh (m)</td>
+                                <td>Froude Number (based on Y)</td>
+                                <td>Energy Es</td>
+                                <td>Fs</td>
+                                <td>Ne</td>
+                                <td>Sf</td>
+                                <td>Qc</td>
+                                <td>Change in Q ΔQ</td>
+                            </thead>
+                            <tbody id="normalDepthBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h5>Output</h5>
+                    <hr>
+                    <div class=container>
+                        <div class=row>
+                            <div class=col>
+                                <h6>Normal Depth: </h6>
+                                <h6>Critical Depth: </h6>
+                            </div>
+                            <div class=col>
+                                <div id=outputyc>
+
+                                </div>
+                                <div id=outputyn>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Plotter-->
+                    <div id="graphDiv"></div>
+                    <script>
+                        /* JAVASCRIPT CODE GOES HERE */
+                    </script>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="directStep" role="tabpanel" aria-labelledby="directStep-tab">
+                Food truck fixiesaa
+                locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore
+                velit,
+                blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee.
+                Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl
+                cillum
+                PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS
+                salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson
+                8-bit,
+                sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester
+                stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Etsy mixtape
+                wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack
+                lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone
+                skateboard
+                locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify
+                squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel
+                fixie
+                etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer
+                blog
+                stumptown. Pitchfork sustainable tofu synth chambray yr.</div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <div>
+        <footer>
+            <!-- Footer Links -->
+            <div class="container-fluid text-center text-md-left">
+                <!-- Grid row -->
+                <div class="row">
+                    <!-- Grid column -->
+                    <div class="col-md-6 mt-md-0 mt-3">
+                        <!-- Content -->
+                        <center>
+                            <h5>Autores</h5>
+                            <hr>
+                            <p>Manuela Larrea. Estudiante de Ingeniería Civil, Universidad de Antioquía.<br>
+                                Juliana Ochoa. Estudiante de Ingeniería Civil, Universidad de Antioquía. <br>
+                                Sebastian Salas. Estudiante de Ingeniería Civil, Universidad de Antioquía.</p>
+                        </center>
+                    </div>
+                    <hr class="clearfix w-100 d-md-none pb-3">
+                    <!-- Grid column -->
+                    <div class="col-md-3 mb-md-0 mb-3">
+                        <h5>Reference</h5>
+                        <a id=reference href="http://onlinecalc.sdsu.edu/textbookhydrologyp291.html">Ponce, V. M.
+                            1989. Engineering Hydrology, Principles and Practices. Prentice Hall, pages 291-297.
+                        </a>
+                    </div>
+                </div>
+                <!-- Grid row -->
+            </div>
+            <!-- Footer Links -->
+        </footer>
+    </div>
+    <!-- Footer -->
+    </div>
+
+    <!--Javascript-->
+    <script src="compuesta.js"></script>
+    <!--Bootstrap-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

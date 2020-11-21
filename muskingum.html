@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <title>Muskingum Cunge</title>
+</head>
+
+<body>
+    <div class=maincontainer>
+        <div class=navigation>
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="circular.html">Circular Culvert</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="compuesta.html">Composite Section</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        href="https://sites.google.com/site/jecanon/Home/academia/hidraulica-de-canales">Resources</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="muskingum.html" tabindex="-1" aria-disabled="true">Muskingum
+                        Cunge</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="onda.html" tabindex="-1" aria-disabled="true">Kinematic Wave</a>
+                </li>
+            </ul>
+        </div>
+        <!---Título-->
+        <div class=title>
+            <center>
+                <h1 class=display-4>Muskingum Cunge</h1>
+            </center>
+        </div>
+        <!--Formulario-->
+        <div class=container>
+            <div class=row>
+                <div class=col>
+                    <div class=form>
+                        <form>
+                            <div class="form-group">
+                                <center><label for="formGroupParametros">
+                                        <h3>Data</h3>
+
+                                    </label>
+                                </center>
+                                <input type="text" class="form-control" id="Qp"
+                                    placeholder="Enter peak discharge Qp (m3/s)">
+                                <input type="text" class="form-control" id="Ap"
+                                    placeholder="Enter peak flow area Ap (m2)">
+                                <input type="text" class="form-control" id="tp"
+                                    placeholder="Enter peak top width Tp (m)">
+                                <input type="text" class="form-control" id="deltat"
+                                    placeholder="Enter time interval Δt (hr)">
+                                <input type="text" class="form-control" id="deltax"
+                                    placeholder="Enter reach lenght Δx (km)">
+                                <input type="text" class="form-control" id="beta" placeholder="Enter rating exponent β">
+                                <input type="text" class="form-control" id="So"
+                                    placeholder="Enter bottom slope So (m/m)">
+                                <input type="text" class="form-control" id="n"
+                                    placeholder="Enter number of inflow hydrograph ordinates n">
+                                <input type="text" class="form-control" id="str"
+                                    placeholder="Enter inflow hydrograph ordinates Qi (start with Q0, separate each value with a comma)">
+
+
+                            </div>
+
+                        </form>
+                        <div>
+                            <center><button type="button" class="btn btn-primary"
+                                    onclick="obtenerDatos()">Calculate</button>
+                                <button type="button" class="btn btn-primary" onclick="limpiarDatos()">Clear
+                                    Fields</button>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class=col>
+                    <div class=form>
+                        <center>
+                            <h3>Formulas</h3>
+                            <p><b>V </b>= Q<sub>p</sub>/A<sub>p</sub></p>
+                            <p><b>q<sub>o</sub> </b> = Q<sub>p</sub>/T<sub>p</sub></p>
+                            <p><b>c </b> = βV</p>
+                            <p><b>C </b>= c(Δt/Δx)</p>
+                            <p><b>D </b>= q<sub>o</sub>/(S<sub>o</sub>cΔx)</p>
+                            <p><b>C<sub>0</sub></b>= (-1+C+D)/(1+C+D)</p>
+                            <p><b>C <sub>1</sub></b>=(1+C-D)/(1+C+D)</p>
+                            <p><b>C<sub>2</sub></b>= (1-C+D)/(1+C+D)</p>
+                            <p><b>O<sub>2</sub></b> = C<sub>0</sub>I<sub>2</sub> + C<sub>1</sub>I<sub>1</sub> +
+                                C<sub>2</sub>O<sub>1</sub></p>
+                        </center>
+                    </div>
+                </div>
+                <div class="table" id="muskingumTable">
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                            <td>Time Interval</td>
+                            <td>Time (hours)</td>
+                            <td>Inflow</td>
+                            <td>Outflow</td>
+                        </thead>
+                        <tbody id="muskingumBody"></tbody>
+                    </table>
+                </div>
+            </div>
+            <!--Plotter-->
+            <div id="graphDiv"></div>
+            <script>
+                /* JAVASCRIPT CODE GOES HERE */
+            </script>
+        </div>
+        <!-- Footer -->
+        <div>
+            <footer>
+                <!-- Footer Links -->
+                <div class="container-fluid text-center text-md-left">
+                    <!-- Grid row -->
+                    <div class="row">
+                        <!-- Grid column -->
+                        <div class="col-md-6 mt-md-0 mt-3">
+                            <!-- Content -->
+                            <center>
+                                <h5>Autores</h5>
+                                <hr>
+                                <p>Manuela Larrea. Estudiante de Ingeniería Civil, Universidad de Antioquía.<br>
+                                    Juliana Ochoa. Estudiante de Ingeniería Civil, Universidad de Antioquía. <br>
+                                    Sebastian Salas. Estudiante de Ingeniería Civil, Universidad de Antioquía.</p>
+                            </center>
+                        </div>
+                        <hr class="clearfix w-100 d-md-none pb-3">
+                        <!-- Grid column -->
+                        <div class="col-md-3 mb-md-0 mb-3">
+                            <h5>Reference</h5>
+                            <a id=reference href="http://onlinecalc.sdsu.edu/textbookhydrologyp291.html">Ponce, V. M.
+                                1989. Engineering Hydrology, Principles and Practices. Prentice Hall, pages 291-297.
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Grid row -->
+                </div>
+                <!-- Footer Links -->
+            </footer>
+        </div>
+        <!-- Footer -->
+    </div>
+
+    <!---Javascript-->
+    <script src="muskingumcunge.js"></script>
+    <!--Bootstrap-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
